@@ -47,12 +47,21 @@ public class Principal {
                 switch (fimDeJogo) {
                     case 1:
                         System.out.println("Fim de jogo!\nVencedor: " + j1.getNome());
+                        j1.setPontuacao();
                         break;
                     case 2:
                         System.out.println("Fim de jogo!\nEmpate");
                         break;
                 }
-                break;
+
+                System.out.println("Nova partida?\n0 - Sim\n1 - Não");
+                fimDeJogo = Integer.parseInt(s.nextLine());
+                if (fimDeJogo == 1) {
+                    System.out.println("Pontuação: \n");
+                    System.out.println(j1.getNome() + " - " + j1.getPontuacao());
+                    System.out.println(j2.getNome() + " - " + j2.getPontuacao());
+                    break;
+                }
             }
 
             // ---------- JOGADOR 2 ----------
@@ -77,12 +86,21 @@ public class Principal {
                 switch (fimDeJogo) {
                     case 1:
                         System.out.println("Fim de jogo!\nVencedor: " + j2.getNome());
+                        j2.setPontuacao();
                         break;
                     case 2:
                         System.out.println("Fim de jogo!\nEmpate");
                         break;
                 }
-                break;
+
+                System.out.println("Nova partida?\n0 - Sim\n1 - Não");
+                fimDeJogo = Integer.parseInt(s.nextLine());
+                if (fimDeJogo == 1) {
+                    System.out.println("Pontuação: \n");
+                    System.out.println(j1.getNome() + " - " + j1.getPontuacao());
+                    System.out.println(j2.getNome() + " - " + j2.getPontuacao());
+                    break;
+                };
             }
         }
     }

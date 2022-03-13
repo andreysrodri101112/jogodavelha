@@ -12,4 +12,11 @@ public class Jogador {
         return this.nome;
     }
 
+    public int getPontuacao(){
+        return this.pontos;
+    }
+
+    public void setPontuacao(){
+        this.pontos += 1;
+    }
 }
