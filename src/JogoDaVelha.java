@@ -11,7 +11,7 @@ public class JogoDaVelha {
     }
 
     public boolean realizaJogada(Integer linha, Integer coluna, Character xo){
-        if (linha >= this.dimensaoTabuleiro && coluna >= this.dimensaoTabuleiro) {
+        if (linha >= this.dimensaoTabuleiro || coluna >= this.dimensaoTabuleiro) {
             return false;
         }
 
@@ -24,27 +24,90 @@ public class JogoDaVelha {
         return true;
     }
 
-    public boolean verificaGanhador(){
+    public int verificaGanhador(Character xo){
+        boolean linhaCompleta;
+        boolean colunaCompleta;
+        boolean diagonalCompleta;
+        boolean empate;
 
-        char primeiraPosicao = '*';
-        boolean winByLineCompleted;
+        empate = this.verificaEmpate();
+        if (empate) {
+            return 2;
+        }
 
-        for (int i = 0; i < this.dimensaoTabuleiro; i++) {
-
-            winByLineCompleted = true;
-            for (int k = 0; k < this.dimensaoTabuleiro; k++) {
-
-                if (k == 0) {
-                    primeiraPosicao = this.tabuleiro[i][k];
+        // Valida linhas
+        for (int linha = 0; linha < this.dimensaoTabuleiro; linha++) {
+            linhaCompleta = true;
+            for (int coluna = 0; coluna < this.dimensaoTabuleiro; coluna++) {
+                if (this.tabuleiro[linha][coluna] != xo) {
+                    linhaCompleta = false;
                 }
+            }
 
-                if (primeiraPosicao != this.tabuleiro[i][k]) {
-                    winByLineCompleted = false;
+            if (linhaCompleta) {
+                return 1;
+            }
+        }
+
+        // Valida colunas
+        for (int coluna = 0; coluna < this.dimensaoTabuleiro; coluna++) {
+            colunaCompleta = true;
+            for (int linha = 0; linha < this.dimensaoTabuleiro; linha++) {
+                if (this.tabuleiro[linha][coluna] != xo) {
+                    colunaCompleta = false;
+                }
+            }
+
+            if (colunaCompleta) {
+                return 1;
+            }
+        }
+
+        // Valida diagonal principal
+        diagonalCompleta = true;
+        for (int linha = 0; linha < this.dimensaoTabuleiro; linha++) {
+            for (int coluna = 0; coluna < this.dimensaoTabuleiro; coluna++) {
+                if (linha == coluna) {
+                    if (this.tabuleiro[linha][coluna] != xo) {
+                        diagonalCompleta = false;
+                    }
                 }
             }
         }
 
-        return false;
+        if (diagonalCompleta) {
+            return 1;
+        }
+
+        // Valida diagonal secundaria
+        diagonalCompleta = true;
+        for (int linha = 0; linha < this.dimensaoTabuleiro; linha++) {
+            for (int coluna = 0; coluna < this.dimensaoTabuleiro; coluna++) {
+                if (linha + coluna == this.dimensaoTabuleiro - 1) {
+                    if (this.tabuleiro[linha][coluna] != xo) {
+                        diagonalCompleta = false;
+                    }
+                }
+            }
+        }
+
+        if (diagonalCompleta) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    public boolean verificaEmpate(){
+        for (int linha = 0; linha < this.dimensaoTabuleiro; linha++) {
+            for (int coluna = 0; coluna < this.dimensaoTabuleiro; coluna++) {
+                if (this.tabuleiro[linha][coluna] == '*') {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void inicializaTabuleiro(){
